@@ -26,7 +26,18 @@ while True:
             print("Valor digitado é menor ou igual a zero")
 
     elif opcao == "s":
-        pass
+        if numero_saques < LIMITE_SAQUES:
+            valor = float(input("Digite o valor que você deseja sacar:"))
+            if valor > 500:
+                print("O valor de saque é de no máximo R$ 500,00")
+            elif valor > saldo:
+                print("O valor de saque é maior do que o saldo da conta")
+            else:
+                saldo -= valor
+                numero_saques += 1
+                print(f"O saque de R$ {valor} foi realizado com sucesso!")
+        else:
+            print("Você já atingiu o número máximo de saques por dia.")        
 
     elif opcao == "e":
         print("\n================ EXTRATO ================")
