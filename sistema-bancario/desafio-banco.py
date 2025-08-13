@@ -21,6 +21,7 @@ while True:
         valor = float(input("Digite o valor do deposito:"))
         if valor > 0:
             saldo += valor
+            extrato += f"Depósito de: R$ {valor:.2f}\n"
             print("Deposito realizado com sucesso!")
         else: 
             print("Valor digitado é menor ou igual a zero")
@@ -35,13 +36,15 @@ while True:
             else:
                 saldo -= valor
                 numero_saques += 1
-                print(f"O saque de R$ {valor} foi realizado com sucesso!")
+                extrato += f"Saque de: R$ {valor:.2f}\n"
+                print(f"O saque de R$ {valor:.2f} foi realizado com sucesso!")
         else:
             print("Você já atingiu o número máximo de saques por dia.")        
 
     elif opcao == "e":
         print("\n================ EXTRATO ================")
-
+        print("Não foram realizadas movimentações" if not extrato else extrato)
+        print(f"O saldo é de R$ {valor:.2f}")
     elif opcao == "q":
         break
 
