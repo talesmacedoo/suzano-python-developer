@@ -30,8 +30,30 @@ def visualizar_historico(saldo: float,*,extrato: str):
     print("Não foram realizadas movimentações" if not extrato else extrato)
     print(f"O saldo é de R$ {saldo:.2f}")
 
-def criar_usuario(nome:str, data_nascimento:str, cpf:str, endereco:str):
-    pass
+def criar_usuario(usuarios: list):
+    cpf = input("Digite o CPF para criação da usuário: ")
+    cpf = cpf.replace(".","").replace("-","")
+
+    for usuario in usuarios:
+        if usuario["Cpf"] == cpf:
+            print("Já existe uma usuário cadastrado para esse CPF!")
+            return usuarios
+    nome = input("Digite o nome para criação da usuário: ")
+    data_de_nascimento = input("Digite o data de nascimento para criação da usuário: ")
+    endereco = input("Digite o endereço para criação da usuário: ")
+
+    usuarios.append(
+        {
+        "nome": nome,
+        "Cpf": cpf,
+        "data de nascimento": data_de_nascimento,
+        "endereco": endereco
+        }
+    )
+    print(f"Usuário {nome} criado com sucesso!")
+
+    return usuarios
+
 
 def criar_conta_corrente(numero_ultima_conta: int, usuario):
     pass
@@ -40,10 +62,12 @@ def main():
 
     menu = """
 
-    [d] Depositar
-    [s] Sacar
-    [e] Extrato
-    [q] Sair
+    [d]  Depositar
+    [s]  Sacar
+    [e]  Extrato
+    [q]  Sair
+    [nu] Novo Usuário
+    [cc] Criar Conta Corrente
 
     => """
 
@@ -73,6 +97,10 @@ def main():
         elif opcao == "e":
            visualizar_historico(saldo, extrato= extrato)
 
+        elif opcao == "nu":
+            usuarios = criar_usuario(usuarios= usuarios)
+        elif opcao == "cc":
+            pass
         elif opcao == "q":
             pass
 
