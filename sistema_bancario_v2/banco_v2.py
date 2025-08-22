@@ -1,6 +1,8 @@
 
 
 def sacar(saldo:float, valor:float, extrato:str, limite:float, numero_saques:int, limite_saques: int):
+    """Realiza saque respeitando saldo, limite por operação e limite diário de saques."""
+
     if numero_saques < limite_saques:
         if valor > limite:
             print("O valor de saque é de no máximo R$ 500,00")
@@ -17,6 +19,8 @@ def sacar(saldo:float, valor:float, extrato:str, limite:float, numero_saques:int
     return saldo, extrato
 
 def depositar(saldo:float, valor:float, extrato:str):
+    """Realiza depósito se o valor for positivo e atualiza o extrato."""
+
     if valor > 0:
         saldo += valor
         extrato += f"Depósito de: R$ {valor:.2f}\n"
@@ -26,18 +30,21 @@ def depositar(saldo:float, valor:float, extrato:str):
     return saldo, extrato
 
 def visualizar_historico(saldo: float,*,extrato: str):
+    """Exibe todas as movimentações realizadas e o saldo atual."""
+
     print("\n================ EXTRATO ================")
     print("Não foram realizadas movimentações" if not extrato else extrato)
     print(f"O saldo é de R$ {saldo:.2f}")
 
 def criar_usuario(usuarios: list):
+    """Cria um novo usuário se o CPF não estiver cadastrado."""
     cpf = input("Digite o CPF para criação da usuário: ")
     cpf = cpf.replace(".","").replace("-","")
 
-    for usuario in usuarios:
-        if usuario["Cpf"] == cpf:
-            print("Já existe uma usuário cadastrado para esse CPF!")
-            return usuarios
+
+    if buscar_usuario(cpf, usuarios):
+        print("Já existe um usuário cadastrado para esse CPF!")
+        return usuarios
     nome = input("Digite o nome para criação da usuário: ")
     data_de_nascimento = input("Digite o data de nascimento para criação da usuário: ")
     endereco = input("Digite o endereço para criação da usuário: ")
@@ -54,9 +61,30 @@ def criar_usuario(usuarios: list):
 
     return usuarios
 
+def buscar_usuario(cpf: str,usuarios: list):
+    """Verifica se já existe um usuário com o CPF informado."""
+    for usuario in usuarios:
+        if usuario["Cpf"] == cpf:
+            return True  
+    return False  # CPF não encontrado
+def criar_conta_corrente(contas:list, numero_ultima_conta: int, agencia: str,usuarios: list):
+    cpf = input("Digite o CPF para criação da conta: ")
+    cpf = cpf.replace(".","").replace("-","")
 
-def criar_conta_corrente(numero_ultima_conta: int, usuario):
-    pass
+    if buscar_usuario(cpf=cpf, usuarios=usuarios):
+        numero_ultima_conta += 1
+        contas.append(
+            {
+            "Agência": agencia,
+            "Número da conta": numero_ultima_conta,
+            "Cpf": cpf
+            }
+        )
+        print(f"Conta criado com sucesso! Cpf: {cpf}, Número da conta: {numero_ultima_conta}, Agência {agencia}")
+
+    else: 
+        print(f"Não existe usuário cadastrado para o CPF:{cpf}!")
+    return contas, numero_ultima_conta
 
 def main():
 
@@ -100,7 +128,7 @@ def main():
         elif opcao == "nu":
             usuarios = criar_usuario(usuarios= usuarios)
         elif opcao == "cc":
-            pass
+            contas, numero_ultima_conta = criar_conta_corrente(contas=contas, numero_ultima_conta= numero_ultima_conta, agencia=agencia,  usuarios=usuarios)
         elif opcao == "q":
             pass
 
