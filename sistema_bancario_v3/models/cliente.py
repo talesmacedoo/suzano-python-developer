@@ -1,16 +1,13 @@
 
 class Cliente():
-    def __init__(self, endereco: str, contas: list):
+    def __init__(self, endereco: SyntaxWarning):
         self._endereco = endereco
-        self._contas = contas
+        self._contas = []
 
     def realizar_transacao(self, conta, transacao):
-
-        #implementar lógica de transação
         transacao.registrar(conta)
 
     def adicionar_conta(self, conta):
-        #implementar lógica de adicionar contas
         self._contas.append(conta)
 
 class PessoaFisica(Cliente):
