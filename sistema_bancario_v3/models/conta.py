@@ -1,4 +1,5 @@
-from historico import Historico
+from models.historico import Historico
+from models.transacoes import Saque
 
 class Conta():
     def __init__(self,  numero: int, cliente):
@@ -56,8 +57,8 @@ class Conta():
 
 
 class ContaCorrente(Conta):
-    def __init__(self, saldo, numero, agencia, Cliente, Historico, limite: float, limite_saques: int):
-        super().__init__(saldo, numero, agencia, Cliente, Historico)
+    def __init__(self, numero, cliente, limite=500, limite_saques=3):
+        super().__init__(numero, cliente)  
         self._limite = limite
         self._limite_saques = limite_saques
 
